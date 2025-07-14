@@ -1,0 +1,13 @@
+name: CodeBuild CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: codebuild-Notes-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: echo "Build triggered from GitHub to AWS CodeBuild"
