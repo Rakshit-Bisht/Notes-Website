@@ -1,13 +1,18 @@
-name: CodeBuild CI
+name: Deploy Static Website
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: codebuild-Notes-${{ github.run_id }}-${{ github.run_attempt }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build
-        run: echo "Build triggered from GitHub to AWS CodeBuild"
+      - name: Deploy to S3
+        run: |
+          aws s3 sync . s3://rakshit-notes-website --exclude ".git/*" --delete
